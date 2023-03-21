@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-  import TodoItem from './TodoItem.svelte';
+    import TodoItem from './TodoItem.svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -21,6 +21,8 @@
     function removeCompletedClickHandler() {
         dispatch('removeCompleted', '');
     }
+
+
 </script>
 
 <div>
