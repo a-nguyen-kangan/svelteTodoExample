@@ -38,7 +38,25 @@
             const res = await fetch('https://jsonplaceholder.typicode.com/todos');
             todoItems = await res.json();
             lastId = todoItems[todoItems.length-1].id;
- 
+            
+            const res2 = await fetch('https://ap-southeast-2.aws.data.mongodb-api.com/app/data-uxvtq/endpoint/data/v1/action/find',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        "dataSource": "DtpKangan",
+                        "database": "Todo",
+                        "collection": "Todos"
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Request-Headers': '*',
+                        'api-key': 'HWsr2q50SyAYeR89vrgHRCE9SYiZSHoHRZ91DbRfTfb0iYWFJ2kuLP3d5emwY6pn'
+                    }
+                }
+            )
+            .then((r)=>r.json())
+            .then((rs)=>console.log(rs))
+            
         }
     )
 </script>
