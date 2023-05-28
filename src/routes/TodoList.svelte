@@ -1,5 +1,6 @@
 <script>
-    import TodoItem from "./TodoItem.svelte";
+    import { component_subscribe } from "svelte/internal";
+import TodoItem from "./TodoItem.svelte";
 
     export let todoItems = [
         {"completed": false, "text": "Learn Svelte"}, // 0
@@ -8,6 +9,15 @@
     ]
 
     $: todosCount = todoItems.length;
+
+    export function addNewItem(newItemName) {
+        if(newItemName || newItemName != '') {
+            let newItem = { 'text': newItemName, 'completed':false };
+            todoItems = [...todoItems, newItem];
+        } else {
+            alert('Invalid todo text')
+        }
+    }
 
     function addButtonClickHandler() {
         if (document.getElementById("inp-todoText").value) {
@@ -24,17 +34,26 @@
 <!-- <div>
     <input id="inp-todoText" type="text" /> <button on:click={addButtonClickHandler}>Add</button>
 </div> -->
-
-Number of todos: { todosCount }
-<div class="todo-items">
-    {#each todoItems as item}
-        <TodoItem item = {item} on:onChangedItem/>
-    {/each}
-
+<div class="container">
+    <p id="todos_num">Number of todos: { todosCount }</p>
+    <div class="todo-items">
+        {#each todoItems as item}
+            <TodoItem item = {item} on:onChangedItem />
+        {/each}
+    </div>
 </div>
 
 <style>
     .todo-items {
-        border: 3px solid
+        border: 3px solid green;
+        width: 60%;
+        margin: auto;
+        
+    }
+    .container {
+        margin: auto;
+    }
+    #todos_num {
+        text-align: center;
     }
 </style>

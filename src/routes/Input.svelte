@@ -25,8 +25,14 @@
 
 </script>
 
-<div>
+<div id='inputs'>
     <input id="inp-todoText" type="text" /> <button on:click={addButtonClickHandler}>Add</button>
     <br>
     <button on:click={removeCompletedClickHandler}>Remove Completed</button>
 </div>
+
+<style>
+    #inputs {
+        text-align: center;
+    }
+</style>
