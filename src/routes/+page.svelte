@@ -4,6 +4,8 @@
     import TodoList from './TodoList.svelte';
 
     let promise;
+    var addItem = ''
+
     let todoItems = [
             {'id': 0, 'userId': 1, 'completed': false, 'title': "Learn Svelte"}, // 0
             {'id': 1, 'userId': 1, 'completed': false, 'title': 'Make Toast'},    // 1
@@ -12,7 +14,9 @@
 
     let lastId = -1;
 
-    async function postNewItem(newItem) {       
+    async function postNewItem(newItem) {
+            alert("Adding item " + newItem.title )
+            addItem = newItem.title;       
             const res = await fetch('https://todos-b646.restdb.io/rest/todos',
                 {
                     method: 'POST',
@@ -26,6 +30,7 @@
             );
     }
 
+    // a function to handle the event when a new item is added to the list
     function handleNewItem(event) {
         lastId++;
         let newItem = {...event.detail.item, id: lastId};
@@ -71,12 +76,24 @@
             return todoItems;
     }
 
+    function removeToAdd() {
+        addItem = '';
+    }
+
+    function setHeadingRed() {
+        document.querySelector('.heading').style.color = 'red';
+    }
 </script>
 
-<h1>Todo App</h1>
+<h1 class="heading">Todo App</h1>
 
 <Input on:onNewItem={handleNewItem} on:removeCompleted={handleRemoveCompleted}/>
 
+<div class="itemAdd">
+    <button on:click={removeToAdd}>Remove Item to Add</button>
+    <button on:click={setHeadingRed}>Set Heading to Red</button>
+    <p>Item to add: { addItem }</p>
+</div>
 {#if promise}
     {#await promise}
         <p>Loading</p>
@@ -97,8 +114,16 @@
         color: blue;
     }
 
+    .itemAdd {
+        text-align: center;
+    }
+
     #error_message {
         text-align: center;
+    }
+
+    :global(body) {
+        background-color: lightblue;
     }
 </style>
 
